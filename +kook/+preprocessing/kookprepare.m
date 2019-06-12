@@ -22,16 +22,16 @@ II1_bg=SelfSubt*II1; % Self-subtration from the original image
 II1=maxImgCount-II1;
 II1=II1-II1_bg;
 II1(II1<0)=0;
-figure();imshow(II1, []);title('Step 1: Inversion and self-subtraction');
+figure();imshow(II1, []);title('Inversion and self-subtraction');
 
 %% - step 2: median filter to remove noise
 II1_mf=medfilt2(II1, [mf mf]);
-figure();imshow(II1_mf, []);title('Step 2: Median filter');
+figure();imshow(II1_mf, []);title('Median filter');
 
 %% - step 3: Unsharp filter
 f = fspecial('unsharp', alpha);
 II1_lt = imfilter(II1_mf, f);
-figure();imshow(II1_lt, []);title('Step 3: Unsharp filter');
+figure();imshow(II1_lt, []);title('Unsharp filter');
 
 %% - step 4: return the image
 newImg = II1_lt;
