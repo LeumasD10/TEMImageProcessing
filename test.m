@@ -1,5 +1,5 @@
 % MATLAB IMAGE PREPROCESSING SCRIPT
-% Written by: Samuel Ma LeumasD10, June 2019
+% Written by: Samuel Ma, June 2019
 % Loads images one at a time, removes footer, applies background
 % subtraction and further image processing techniques
 
@@ -13,11 +13,12 @@ img0 = imread([img_directory,img]);
 
 % ui.displayimg(img0,'figure 1'); % Verify correct image selected
 
-%% Collect TEM_scale data
-TEM_scale = 1; %TODO: Utilize Tim's OCR method
 
 %% Remove footer from image - display result
 img_cropped = imgtools.footerremove(img0); % crop footer
+%% Collect TEM_scale data
+[~,TEM_scale] = imgtools.get_footer_scale(img_cropped); %TODO: Utilize Tim's OCR method
+
 % ui.displayimg(img_cropped,'figure 2');
 
 %% Obtain binary image
@@ -34,7 +35,7 @@ ui.displayimg(img_new,'figure 4');
 % se = strel('disk',3);
 img_new2 = kook.preprocessing.kookprepare(img_new);
 [dp,centersCED,metricCED] = kook.methods.performkook(img_new2,TEM_scale,img_cropped);
-figure(); hist(dp); title('Distribution of Primary Particle Diameters');   % Plot Histogram of Data
+figure(); histogram(dp); title('Distribution of Primary Particle Diameters');   % Plot Histogram of Data
 
 
 ui.displayimg(img_new2,'figure 5');

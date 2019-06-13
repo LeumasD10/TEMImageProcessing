@@ -24,17 +24,17 @@ function [img,pixsize] = get_footer_scale(img)
 %     img.Cropped = img.RawImage;
 % end
 
-img.Cropped = footerremove(img);
+% img.Cropped = footerremove(img);
 
 
 %% Step 1-2: Detecting Magnification and/or pixel size
-img.ocr = ocr(img.Footer);
-pixsize_end = strfind(img.ocr.Text,' nm/pix')-1;
+img_ocr = ocr(img);
+pixsize_end = strfind(img_ocr.Text,' nm/pix')-1;
 if isempty(pixsize_end) % if not found, try nmlpix
-    pixsize_end = strfind(img.ocr.Text,' nmlpix')-1;
+    pixsize_end = strfind(img_ocr.Text,' nmlpix')-1;
 end
-pixsize_start = strfind(img.ocr.Text,'Cal')+5;
-pixsize = str2double(img.ocr.Text(pixsize_start:pixsize_end));
+pixsize_start = strfind(img_ocr.Text,'Cal')+5;
+pixsize = str2double(img_ocr.Text(pixsize_start:pixsize_end));
 
 disp(['Pixel size: ',num2str(pixsize),' nm/pixel']);
 
