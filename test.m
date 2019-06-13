@@ -18,7 +18,7 @@ img0 = imread([img_directory,img]);
 [img_cropped,img_top] = imgtools.footerremove(img0); % crop footer
 
 %% Collect TEM_scale data
-[~,TEM_scale] = imgtools.get_footer_scale(img_top); %TODO: Utilize Tim's OCR method
+[~,TEM_scale] = imgtools.get_footer_scale(img_top);
 
 % ui.displayimg(img_cropped,'figure 2');
 
