@@ -29,12 +29,21 @@ function [img,pixsize] = get_footer_scale(img)
 
 %% Step 1-2: Detecting Magnification and/or pixel size
 img_ocr = ocr(img);
+ismicro = 1;
+
 pixsize_end = strfind(img_ocr.Text,' nm/pix')-1;
 if isempty(pixsize_end) % if not found, try nmlpix
     pixsize_end = strfind(img_ocr.Text,' nmlpix')-1;
+    if isempty(pixsize_end)
+        ismicro = 1000;   % scale is in micrometers
+        pixsize_end = strfind(img_ocr.Text,' pmlpix')-1; % if pixel size is in micrometers
+        if isempty(pixsize_end)
+            pixsize_end = strfind(img_ocr.Text,'pm/pix')-1;
+        end
+    end
 end
 pixsize_start = strfind(img_ocr.Text,'Cal')+5;
-pixsize = str2double(img_ocr.Text(pixsize_start:pixsize_end));
+pixsize = str2double(img_ocr.Text(pixsize_start:pixsize_end))*ismicro;
 
 disp(['Pixel size: ',num2str(pixsize),' nm/pixel']);
 

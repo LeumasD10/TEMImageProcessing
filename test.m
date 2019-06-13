@@ -37,6 +37,7 @@ ui.displayimg(img_new,'figure 4');
 img_new2 = kook.preprocessing.kookprepare(img_new);
 [dp,centersCED,metricCED] = kook.methods.performkook(img_new2,TEM_scale,img_cropped);
 figure(); histogram(dp); title('Distribution of Primary Particle Diameters');   % Plot Histogram of Data
-
+ylabel('Number of Occurences');
+xlabel('Particle Diameter (nm)');
 
 ui.displayimg(img_new2,'figure 5');
