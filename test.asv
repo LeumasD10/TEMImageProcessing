@@ -31,12 +31,12 @@ aggregateBin = {};
 aggregate_quit = 0;
 binIndex = 1;
 
-while aggregate_quit == 0
+while (aggregate_quit == 0)
     aggregateBin{binIndex} = thresholding.Agg_det_Slider(img_cropped);
     binIndex = binIndex + 1;
     answer = questdlg('Are there more aggregates to analyze?', ...
             'Check', ...
-            'Yes','No','Prompt');
+            'Yes','No');
     switch answer
         case 'Yes'
             aggregate_quit = 0;
@@ -46,7 +46,7 @@ while aggregate_quit == 0
 end
 
 
-% img_binary = thresholding.Agg_det_Slider(img_cropped);
+img_binary = thresholding.Agg_det_Slider(img_cropped);
 % ui.displayimg(img_binary,'figure 3');
 
 %% Further Processing
