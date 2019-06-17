@@ -65,8 +65,9 @@ end
 
 
 %% Process each Image using Kook's Techniques
-for i = 1:1:size(aggregateBin,2)
-    perform(img_cropped,aggregateBin{i},i,TEM_scale);
+for i = aggregatebin
+    curr_cropped = 
+    perform()
 end
 % img_binary = thresholding.Agg_det_Slider(img_cropped);
 % ui.displayimg(img_binary,'figure 3');

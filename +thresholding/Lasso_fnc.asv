@@ -25,13 +25,13 @@ while drawing_correct == 0
    message = sprintf('Please draw an approximate boundary around the aggregate.\nLeft click and hold to begin drawing.\nLift mouse button to finish');
    uiwait(msgbox(message));
    hFH = imfreehand(); 
-   finished_check = questdlg('Are you satisfied with your drawing?','Lasso Complete?','Yes','No','Take me back','No');
+   finished_check = questdlg('Are you satisfied with your drawing?','Lasso Complete?','Yes','No','Mistake, take me back','No');
             % if user is happy with their selection...
             if strcmp(finished_check, 'Yes')
                 drawing_correct = 1;
             % if user would like to redo their selection...
-            elseif strcmp(finished_check, 'Take me back')
-                error('Operation aborted...exiting');   % Throw error to abort aggregate selection
+            elseif strcmp(finished_check, 'Mistake, take me back')
+                error('')
             else
                 delete(hFH);
             end     
