@@ -9,6 +9,9 @@ close all; clear all;
 
 %% Initialization of Script Parameters
 lid = 10;   % Script can hold 10 aggregates
+aggregateBin = cell(0,lid); % Bin of aggregates to process
+resultsBin = cell(0,lid); % Bin of result objects from corresponding aggregates
+colorarray = ['r','o','y','g','b'];
 
 %% Obtain image - display result
 [img,img_directory] = uigetfile('*.tif');
@@ -26,9 +29,6 @@ img0 = imread([img_directory,img]);
 % ui.displayimg(img_cropped,'figure 2');
 
 %% Obtain binary images
-
-aggregateBin = cell(0,lid); % Preallocating to speed up program runtime
-% aggregateBin = {};
 aggregate_quit = 0;
 binIndex = 1;
 
@@ -50,7 +50,6 @@ while aggregate_quit == 0
                 rethrow(ERR);
         end
     end
-    
     binIndex = binIndex + 1;
     answer = questdlg('Are there more aggregates to analyze?', ...
             'Check', ...
@@ -66,8 +65,23 @@ end
 
 %% Process each Image using Kook's Techniques
 for i = 1:1:size(aggregateBin,2)
-    perform(img_cropped,aggregateBin{i},i,TEM_scale);
+    [d,c,m] = perform(img_cropped,aggregateBin{i},i,TEM_scale);
+    resultsBin{i}.dist = d;
+    resultsBin{i}.cents = c;
+    resultsBin{i}.metr = m;
 end
+
+%% Overlay detected primary particles for each aggregate
+figure();imshow(img_cropped,[]); hold;
+% title('Primary particles overlaid on the original TEM image');
+for i = 1:1:size(aggregateBin,2)
+    radii = resultsBin{i}.dist./2;
+    centers = resultsBin{i}.cents;
+    h = viscircles(centers,radii,'EdgeColor','r');
+    text(avecenter(1,1),avecenter(1,2),'1');
+end
+title('Primary particles overlaid on the original TEM image');
+
 % img_binary = thresholding.Agg_det_Slider(img_cropped);
 % ui.displayimg(img_binary,'figure 3');
 
@@ -76,7 +90,7 @@ end
 % % Background Subtraction
 % img_new = double(img_cropped).*img_binary;
 % ui.displayimg(img_new,'figure 4');
-% 
+%
 % % Utilization of Kook's Algorithm
 % % se = strel('disk',3);
 % img_new2 = kook.preprocessing.kookprepare(img_new);
@@ -84,5 +98,5 @@ end
 % figure(); histogram(dp); title('Distribution of Primary Particle Diameters');   % Plot Histogram of Data
 % ylabel('Number of Occurences');
 % xlabel('Particle Diameter (nm)');
-% 
+%
 % ui.displayimg(img_new2,'figure 5');

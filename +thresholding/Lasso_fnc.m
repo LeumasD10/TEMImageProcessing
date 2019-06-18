@@ -12,6 +12,12 @@ function binaryImage = Lasso_fnc(Cropped_im)
 %     data
 %   - QOL - User will not have to restart program if they mess up the lasso
 
+% Updated by Samuel Ma on June 2019
+% Updates/QOL Changes:
+%     -   Prompts user if they would like to exit the analysis interface in case 
+%         they misclicked and are required to analyze another particle
+%     -   If user wishes to exit, throw an exception that will run into try-catch
+
 fontsize = 10;
 %% Displaying cropped image
 figure; imshow(Cropped_im);
@@ -31,7 +37,7 @@ while drawing_correct == 0
                 drawing_correct = 1;
             % if user would like to redo their selection...
             elseif strcmp(finished_check, 'Take me back')
-                error('Operation aborted...exiting');   % Throw error to abort aggregate selection
+                error('Operation aborted...exiting');   % Throw exception to abort aggregate selection
             else
                 delete(hFH);
             end     

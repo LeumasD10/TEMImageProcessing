@@ -10,7 +10,7 @@ function [newImg] = kookprepare(II1)
 SelfSubt = 0.8; % Self-subtraction level
 maxImgCount = 255; % Maximum image count for 8-bit image
 mf = 1; % Median filter [x x] if needed
-alpha = 0.1; % Shape of the negative Laplacian “unsharp” filter 0?1
+alpha = 0.1; % Shape of the negative Laplacian ï¿½unsharpï¿½ filter 0?1
 
 OriginalImg = II1;
 
@@ -22,19 +22,18 @@ II1_bg=SelfSubt*II1; % Self-subtration from the original image
 II1=maxImgCount-II1;
 II1=II1-II1_bg;
 II1(II1<0)=0;
-figure();imshow(II1, []);title('Inversion and self-subtraction');
+% figure();imshow(II1, []);title('Inversion and self-subtraction');
 
 %% - step 2: median filter to remove noise
 II1_mf=medfilt2(II1, [mf mf]);
-figure();imshow(II1_mf, []);title('Median filter');
+% figure();imshow(II1_mf, []);title('Median filter');
 
 %% - step 3: Unsharp filter
 f = fspecial('unsharp', alpha);
 II1_lt = imfilter(II1_mf, f);
-figure();imshow(II1_lt, []);title('Unsharp filter');
+% figure();imshow(II1_lt, []);title('Preprocessed Image');
 
 %% - step 4: return the image
 newImg = II1_lt;
 
 end
-
