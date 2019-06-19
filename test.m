@@ -5,13 +5,14 @@
 
 
 %% Housekeeping - clear all windows and variables
-close all; clear all;
+close all; 
+clear all;
 
 %% Initialization of Script Parameters
 lid = 10;   % Script can hold 10 aggregates
 aggregateBin = cell(0,lid); % Bin of aggregates to process
 resultsBin = cell(0,lid); % Bin of result objects from corresponding aggregates
-colorarray = ['r','o','y','g','b'];
+colorarray = ['r','g','b','c','m','y','k','w'];
 
 %% Obtain image - display result
 [img,img_directory] = uigetfile('*.tif');
@@ -65,7 +66,7 @@ end
 
 %% Process each Image using Kook's Techniques
 for i = 1:1:size(aggregateBin,2)
-    [d,c,m] = perform(img_cropped,aggregateBin{i},i,TEM_scale);
+    [d,c,m] = perform(img_cropped,aggregateBin{i},i,colorarray,TEM_scale);
     resultsBin{i}.dist = d;
     resultsBin{i}.cents = c;
     resultsBin{i}.metr = m;
@@ -77,8 +78,12 @@ figure();imshow(img_cropped,[]); hold;
 for i = 1:1:size(aggregateBin,2)
     radii = resultsBin{i}.dist./2;
     centers = resultsBin{i}.cents;
-    h = viscircles(centers,radii,'EdgeColor','r');
-    text(avecenter(1,1),avecenter(1,2),'1');
+    if (i>length(colorarray))
+        col = colorarray(1);
+    else
+        col = colorarray(i);
+    end
+    h = viscircles(centers,radii,'EdgeColor',col);
 end
 title('Primary particles overlaid on the original TEM image');
 
