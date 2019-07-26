@@ -3,7 +3,6 @@ function [distr, centers, metr] = perform(img_cropped,img_binary,i,colorarray,TE
 %   Runs through images of a specified index, requires the original cropped
 %   image and binary image, returns array of primary particle diameters and
 %   useful figures
-%   Written by: Samuel Ma, June 2019
 
 %% Further Processing
 

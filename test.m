@@ -1,5 +1,4 @@
 % MATLAB IMAGE PREPROCESSING SCRIPT
-% Written by: Samuel Ma, June 2019
 % Loads images one at a time, removes footer, applies background
 % subtraction and further image processing techniques
 
